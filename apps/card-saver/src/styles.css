@@ -2,3 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 /* You can add global styles to this file, and also import other style files */
+
+.formWrapper
+{
+  
+    border: 1px solid black;
+    align-items: center;
+    
+}
+
+.formInput
+{
+  
+    border: 1px solid gray;
+    border-radius: 3px;
+    display: inline;
+}
+
+.formInputContainer
+{
+    width: 300px;
+    border: 1px solid blue;
+    margin-left: 20px;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+}
