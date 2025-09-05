@@ -10,6 +10,10 @@
     align-items: center;
     
 }
+.cardInformationWrapper{
+    border: 1px solid black;
+    align-items: center;
+}
 
 .formInput
 {

@@ -1,12 +1,8 @@
+import { useCardContext } from "../../../shared/context/card-context";
+
 export function CardInformation() {
  
-    const card= {
-          cardNumber: '123456789123456',
-          expirationDate: '12/45',
-          ownerName: 'Ezequiel Garcia',
-          cvv: '123',
-        
-    }
+   const card = useCardContext();
 
   return (
     <div className="cardInformationWrapper flex flex-col min-h-96 max-w-[800px] p-5">
