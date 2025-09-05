@@ -2,8 +2,8 @@ import cardLayoutBackground from '../../../assets/credit-card-template.png';
 import { useCardContext } from '../../../shared/context/card-context';
 
 export function CardLayout() {
-    const {card} = useCardContext();
- 
+  const { card } = useCardContext();
+
   // function to format the card number and add spaces
   const formatCardNumber = (num: string) =>
     num
@@ -12,9 +12,9 @@ export function CardLayout() {
       .trim();
 
   return (
-    <div className="flex items-center space-y-6 ">
+    <div className="relative top-[80px] flex items-center space-y-6 ">
       {/* card layout*/}
-      <div className="relative w-[400px] h-[300] border border-blue-500">
+      <div className="relative w-[400px] h-[300]">
         <img
           src={cardLayoutBackground}
           alt="CardLayout"

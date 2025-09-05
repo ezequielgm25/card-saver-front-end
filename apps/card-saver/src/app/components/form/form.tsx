@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import { useCardContext } from '../../../shared/context/card-context';
 
 export function Form() {
-  const { card, setCard } = useCardContext();
+  const { card, setCard, saveCard } = useCardContext();
 
   // getting constants information for validating the date
   const currentYear = new Date().getFullYear() % 100; // getting current year last 2 digits
@@ -41,7 +41,7 @@ export function Form() {
   });
 
   return (
-    <div className="formWrapper flex flex-col min-h-96 max-w-[800px] p-5">
+    <div className="formWrapper flex flex-col p-5">
       <Formik
         initialValues={{
           cardNumber: '',
@@ -50,9 +50,10 @@ export function Form() {
           cvv: '',
         }}
         validationSchema={validationSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          /// Empty for the moment
-          console.log('Hola we are submiting the data');
+        onSubmit={(values, { setSubmitting, resetForm }) => {
+          saveCard(values);
+          setSubmitting(false);
+          resetForm();
         }}
       >
         {({
@@ -65,17 +66,14 @@ export function Form() {
           isSubmitting,
           setFieldValue,
           resetForm,
-
-          /* and other goodies */
         }) => (
-          <form
-            className=" h-full w-full m-6 inline  border-amber-400 border  p-9"
-            onSubmit={handleSubmit}
-          >
+          <form className="h-full w-full m-6 inline" onSubmit={handleSubmit}>
             {/* First Row */}
             <div className="grid grid-cols-2 gap-6 mb-4">
               <div className="formInputContainer">
-                <label htmlFor="cardNumber">Numero de Tarjeta</label>
+                <label htmlFor="cardNumber" className="font-bold">
+                  Numero de Tarjeta
+                </label>
                 <input
                   className="formInput"
                   type="text"
@@ -95,12 +93,14 @@ export function Form() {
                 />
               </div>
               <div className="formInputContainer">
-                <label htmlFor="expirationDate">Fecha de Vencimiento</label>
+                <label htmlFor="expirationDate" className="font-bold">
+                  Fecha de Vencimiento
+                </label>
                 <input
                   className="formInput "
                   type="text"
                   name="expirationDate"
-                    onChange={(e) => {
+                  onChange={(e) => {
                     setFieldValue('expirationDate', e.target.value);
                     /// setting the changes to the card contect to be reflected in the card layout
                     setCard({
@@ -124,7 +124,9 @@ export function Form() {
             {/* Second Row */}
             <div className="grid grid-cols-2 gap-6 mb-4">
               <div className="formInputContainer">
-                <label htmlFor="ownerName">Nombre Titular</label>
+                <label htmlFor="ownerName" className="font-bold">
+                  Nombre Titular
+                </label>
                 <input
                   className="formInput "
                   type="text"
@@ -149,7 +151,9 @@ export function Form() {
                 />
               </div>
               <div className="formInputContainer">
-                <label htmlFor="cvv">CVV</label>
+                <label htmlFor="cvv" className="font-bold">
+                  CVV
+                </label>
                 <input
                   className="formInput"
                   type="text"
@@ -166,10 +170,10 @@ export function Form() {
               </div>
             </div>
             {/* Button Section */}
-            <div className="buttonSection flex gap-4">
+            <div className="buttonSection flex gap-4 ml-5">
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-full shadow"
+                className="bg-blue-500 text-white px-4 rounded-full shadow h-9"
                 disabled={isSubmitting || errors === null}
               >
                 Agregar Tarjeta
@@ -177,7 +181,7 @@ export function Form() {
               {/* clearing the form if it is touched*/}
               <button
                 type="reset"
-                className="bg-gray-300 text-gray-700 px-4 py-2 rounded-full shadow"
+                className="bg-gray-300 text-gray-700 px-4 py-2 rounded-full shadow h-9"
                 disabled={isSubmitting}
                 onClick={touched ? () => resetForm() : undefined}
               >
