@@ -1,7 +1,10 @@
 import { ErrorMessage, Formik } from 'formik';
 import * as Yup from 'yup';
+import { useCardContext } from '../../../shared/context/card-context';
 
 export function Form() {
+  const { card, setCard } = useCardContext();
+
   // getting constants information for validating the date
   const currentYear = new Date().getFullYear() % 100; // getting current year last 2 digits
   const maxYear = currentYear + 5;
@@ -61,8 +64,8 @@ export function Form() {
           handleSubmit,
           isSubmitting,
           setFieldValue,
-          resetForm
-          
+          resetForm,
+
           /* and other goodies */
         }) => (
           <form
@@ -97,7 +100,16 @@ export function Form() {
                   className="formInput "
                   type="text"
                   name="expirationDate"
-                  onChange={handleChange}
+                    onChange={(e) => {
+                    setFieldValue('expirationDate', e.target.value);
+                    /// setting the changes to the card contect to be reflected in the card layout
+                    setCard({
+                      cardNumber: card.cardNumber,
+                      expirationDate: e.target.value,
+                      ownerName: card.ownerName,
+                      cvv: card.cvv,
+                    });
+                  }}
                   onBlur={handleBlur}
                   value={values.expirationDate}
                 />
@@ -117,7 +129,16 @@ export function Form() {
                   className="formInput "
                   type="text"
                   name="ownerName"
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    setFieldValue('ownerName', e.target.value);
+                    /// setting the changes to the card contect to be reflected in the card layout
+                    setCard({
+                      cardNumber: card.cardNumber,
+                      expirationDate: card.expirationDate,
+                      ownerName: e.target.value,
+                      cvv: card.cvv,
+                    });
+                  }}
                   onBlur={handleBlur}
                   value={values.ownerName}
                 />
@@ -149,7 +170,7 @@ export function Form() {
               <button
                 type="submit"
                 className="bg-blue-500 text-white px-4 py-2 rounded-full shadow"
-                disabled={isSubmitting || errors === null }
+                disabled={isSubmitting || errors === null}
               >
                 Agregar Tarjeta
               </button>
@@ -158,7 +179,7 @@ export function Form() {
                 type="reset"
                 className="bg-gray-300 text-gray-700 px-4 py-2 rounded-full shadow"
                 disabled={isSubmitting}
-                onClick={ touched ? () => resetForm() : undefined}   
+                onClick={touched ? () => resetForm() : undefined}
               >
                 Cancelar
               </button>

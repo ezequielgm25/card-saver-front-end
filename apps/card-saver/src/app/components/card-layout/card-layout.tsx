@@ -2,7 +2,7 @@ import cardLayoutBackground from '../../../assets/credit-card-template.png';
 import { useCardContext } from '../../../shared/context/card-context';
 
 export function CardLayout() {
-    const card = useCardContext();
+    const {card} = useCardContext();
  
   // function to format the card number and add spaces
   const formatCardNumber = (num: string) =>
