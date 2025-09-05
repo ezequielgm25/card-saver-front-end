@@ -1,19 +1,14 @@
-import { useCardContext } from "../../../shared/context/card-context";
 
-export function CardInformation() {
+export function CardInformation({ card }) {
  
-   const {card} = useCardContext();
    function hideCardNumbers(cardNumber: string): string {
   if (!cardNumber) return "";
-
- 
   const firstTwo = cardNumber.slice(0, 2);
   const lastFour = cardNumber.slice(-4);
   const masked = "*".repeat(cardNumber.length - 6);
 
   return `${firstTwo}${masked}${lastFour}`;
 }
-
 
   return (
     <div className="cardInformationWrapper flex flex-col min-h-96 max-w-[800px] p-5">

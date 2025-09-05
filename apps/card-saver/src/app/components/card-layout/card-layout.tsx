@@ -12,9 +12,9 @@ export function CardLayout() {
       .trim();
 
   return (
-    <div className="flex items-center space-y-6 ">
+    <div className="relative top-[80px] flex items-center space-y-6 ">
       {/* card layout*/}
-      <div className="relative w-[400px] h-[300] border border-blue-500">
+      <div className="relative w-[400px] h-[300]">
         <img
           src={cardLayoutBackground}
           alt="CardLayout"
