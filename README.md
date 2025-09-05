@@ -1,15 +1,41 @@
-# Y
+# Proyecto Front-End - Caze
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+## Descripción
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+Este proyecto es la interfaz web para hacer guardado de una tarjeta con algunas validaciones implementadas como criterio de una prueba tecnica FRONT-END.
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/tutorials/react-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+Está hecho con **React + TypeScript**, organizado con **NX**, y con **Tailwind CSS** para estilos modernos.
 
-## Finish your CI setup
+Usamos:
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/DasVRBg1yG)
+- **Formik** para manejo de formularios.
+- **Yup** para validación de esquemas.
+- **Prettier** para mantener el código bonito y consistente.
 
+Decidi utilizar esta libreria y tecnologias porque es la mas reciente que he usado. ha nivel laboral con una compania international llamada toolsgroup.
+
+## Características principales
+
+- Manejo de **formularios con validación** usando Formik.
+- Listado dinámico de tarjetas de debito/credito usando un **context provider**.
+- Estilos modernos y responsivos con Tailwind se (OJO) necesitan mejorar.
+- Posibilidad de **guardar, mostrar tarjetas** por el momento en el front-end backend tiene el CRUD completo.
+
+---
+
+## Preview de la WEB APP
+
+![Sin Tarjetas](./documentation-assets/empty-list-state.png);
+
+![Con Tarjetas](./documentation-assets/cards-on-list.png)
+
+## Instalación
+
+```bash
+git clone https://github.com/ezequielgm25/card-saver-front-end.git
+cd card-saver-front-end
+npm install
+```
 
 ## Run tasks
 
@@ -25,58 +51,68 @@ To create a production bundle:
 npx nx build card-saver
 ```
 
-To see all available targets to run for a project, run:
+## Visualizar app
 
-```sh
-npx nx show project card-saver
-```
+Para visualizar la app una vez corriendo dirigirse al http://localhost:4200/
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+Alli podra agregar una tarjeta una vez el Backend se encuentre corriendo las instrucciones del mismo estan en el readme del repositorio de backend.
+Back-End: https://github.com/ezequielgm25/card-saver-back-end.
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Si el backend esta corriendo y funcionando puede agregar una tarjeta y la misma se agregara a una lista edbajo si cumple con los requisitos estipulados en la prueba tecnica.
 
-## Add new projects
+Los cuales son los siguientes:
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
+1. Realizar maquetación del diseño suministrado y tomar en cuenta:
+   a) Todos los campos son requeridos.
+   b) El editar los campos de tarjetas, fecha y nombre modifica el diseño de la tarjeta.
+   c) El campo tarjeta solo puede contener números y un máximo de 16 caracteres.
+   d) El campo fecha de vencimiento debe tener formato mm/yy.
+   e) El campo fecha solo puede aceptar valores válidos para mes (01 a 12) y año (22
+   hasta año actual + 5).
+   f) El campo Nombre titular solo puede contener letras y letras con tildes y máximo
+   de 20 caracteres.
+   g) En caso de que algún campo no sea válido se debe colocar texto en rojo debajo
+   del campo indicando la causa de la invalidez.
 
-Use the plugin's generator to create new projects.
+2. Al pulsar botón de Agregar tarjeta.
+   a) Debe agregar la tarjeta a un bloque en el cual se mostrarán los campos de
+   tarjeta, nombre y fecha vencimiento.
+   b) Para cada registro se debe contener un identificador único.
+   c) Debe validar que el formulario sea válido y que al no ser válido despliegue los
+   textos en cada campo que no es válido.
+   d) El campo de número de tarjeta se debe mostrar enmascarado, solo mostrar los
+   12 primeros y 4 últimos dígitos (ej. 41**\*\*\*\***1234).
 
-To generate a new application, use:
+3) Al pulsar botón Cancelar se deben limpiar todos los campos.
 
-```sh
-npx nx g @nx/react:app demo
-```
+## estructura de carpetacion
 
-To generate a new library, use:
+src/
+├─ components/ # Componentes utilizados en la applicacion
+├─ assets/ # Recursos visuales.
+├─ shared/ # Aqui estan los recursos compartido en este caso Contextos de React (ej: CardContext)
+├─ services/ # Funciones de API
+├─ types/ # Types de uso general
+└─ App.tsx
 
-```sh
-npx nx g @nx/react:lib mylib
-```
+## Detalles de logica utilizada
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+El front-end está dividido en varios componentes para separar la lógica de negocio de la presentación, haciendo que el código sea más fácil de mantener y entender.
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+PageContainer
+Componente principal que agrupa todos los demás. Actúa como contenedor de la página, manteniendo la estructura general.
 
+CardLayout
+Aquí se encuentra el diseño de la tarjeta de crédito. Los datos como nombre del titular y fecha de expiración se actualizan dinámicamente según lo que el usuario ingresa en el formulario.
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Form
+Este componente se encarga de la lógica del formulario, incluyendo validaciones con Formik y Yup. Envía la información directamente al contexto (CardContext) para que esté disponible en toda la app.
 
-## Install Nx Console
+CardsList
+Componente encargado de mostrar las tarjetas ya almacenadas, incluyendo la última tarjeta agregada.
+Muestra la lista de forma dinámica, permitiendo que los nuevos datos se vean inmediatamente después de ser guardados.
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+## Enlaces de repositorios
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/getting-started/tutorials/react-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Front-End: https://github.com/ezequielgm25/card-saver-front-end
+Back-End: https://github.com/ezequielgm25/card-saver-back-end

@@ -173,7 +173,7 @@ export function Form() {
             <div className="buttonSection flex gap-4 ml-5">
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 rounded-full shadow h-9"
+                className="bg-purple-500 text-white px-4 rounded-full shadow h-9"
                 disabled={isSubmitting || errors === null}
               >
                 Agregar Tarjeta
