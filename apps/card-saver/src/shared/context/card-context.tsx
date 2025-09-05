@@ -8,13 +8,7 @@ import {
   useEffect,
 } from 'react';
 import { addCard, getCards } from '../../services/card-services';
-
-type Card = {
-  cardNumber: string;
-  expirationDate: string;
-  ownerName: string;
-  cvv: string;
-};
+import { Card } from '../../types/general-types';
 
 type CardContextType = {
   card: Card;
@@ -42,32 +36,30 @@ const cardContext = createContext<CardContextType>({
 export function CardContextProvider({ children }: PropsWithChildren) {
   const [card, setCard] = useState<Card>({
     cardNumber: '123456789123458',
-    expirationDate: '12/45',
-    ownerName: 'Ezequiel Garcia',
+    expirationDate: '12/30',
+    ownerName: 'Ezequiel Garcia SII TEST',
     cvv: '123',
   });
 
   const [cardsList, setCardsList] = useState<Card[]>([]);
 
-  useEffect(()=> {
-     const fetchCards = async () => {
+  const saveCard = (values: Card) => {
+    addCard(values).then(() => fetchCards());
+  };
+  const fetchCards = async () => {
     try {
-      const cards = await getCards(); // ahora sí esperas la Promise
-      setCardsList(cards || []);
+      const cards = await getCards();
+      setCardsList((cards || []).reverse());
     } catch (error) {
-      console.error("Error al obtener tarjetas:", error);
+      console.error('Error al obtener tarjetas:', error);
     }
   };
-
-  fetchCards(); 
-  },[]);
-
-  const saveCard = (values: Card) => {
-    addCard(values);
-  };
+  useEffect(() => {
+    fetchCards();
+  }, []);
 
   return (
-    <cardContext.Provider value={{ card,cardsList, setCard, saveCard }}>
+    <cardContext.Provider value={{ card, cardsList, setCard, saveCard }}>
       {children}
     </cardContext.Provider>
   );
